@@ -29,7 +29,7 @@ void setup() {
 
   // Initialize ThingSpeak
   ThingSpeak.begin(client);
-  Serial.println("DHT22 test nâng cao!");
+  Serial.println("DHT22 test!");
   dht.begin();
 }
 
@@ -38,7 +38,7 @@ void loop() {
   float t = dht.readTemperature();
   
   if (isnan(h) || isnan(t)) {
-    Serial.println("Lỗi đọc cảm biến!");
+    Serial.println("Fail to collect data!");
     return;
   }
   
@@ -46,14 +46,14 @@ void loop() {
   ThingSpeak.setField(1, t); // Field 1: Temperature
   ThingSpeak.setField(2, h);    // Field 2: Humidity
 
-  int statusCode = ThingSpeak.writeFields(myChannelNumber, myWriteAPIKey);
+  int statusCode = ThingSpeak.writeFields(myChannelNumber, myWriteAPIKey);// Send data to ThingSpeak server and return a status code
 
   if (statusCode == 200) {
-    Serial.println("Data sent successfully!");
+    Serial.println("Data sent successfully!");  
   } else {
     Serial.print("Error sending data. HTTP error code: ");
     Serial.println(statusCode);
   }
 
-  delay(15000);
+  delay(15000);//delay 15 secs before the next transmission
 }
